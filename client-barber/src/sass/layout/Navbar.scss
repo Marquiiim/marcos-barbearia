@@ -1,0 +1,32 @@
+$background: #2E2E2E;
+$font: #7B1E2B;
+
+nav {
+    width: 100%;
+    background-color: $background;
+
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        gap: 2rem;
+
+        li {
+
+            a {
+                color: white;
+                background-color: transparent;
+                border-radius: .8rem;
+                padding: .8rem;
+                transition: 0.3s ease-in-out;
+
+                &:hover {
+                    color: $font;
+                    font-weight: bold;
+                    background-color: white;
+                }
+            }
+        }
+    }
+}

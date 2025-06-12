@@ -1,0 +1,43 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+.container .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+.container .content .content_logo {
+  transition: transform 0.5s ease-in-out;
+}
+.container .content .content_logo:hover {
+  transform: scale(1.05);
+}
+.container .content .content_logo img {
+  height: 30rem;
+  width: auto;
+}
+.container .content .content_frase p {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 0 #7B1E2B, 2px 2px 0 #7B1E2B, 2px 2px 0 #7B1E2B, 2px 2px 0 #7B1E2B;
+  letter-spacing: 1px;
+}
+.container .content .button_agendar {
+  margin: 1rem;
+}
+.container .content .button_agendar button {
+  background-color: #7B1E2B;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.8rem;
+  padding: 1rem;
+}
+.container .content .button_agendar button:hover {
+  background-color: #4b141b;
+  cursor: pointer;
+}/*# sourceMappingURL=Home.module.css.map */
