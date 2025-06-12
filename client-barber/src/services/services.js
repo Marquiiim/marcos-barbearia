@@ -45,7 +45,7 @@ pool.on('error', (err) => {
 
 app.get('/api/dados', (req, res) => {
 
-    const sql = 'SELECT * FROM carros'
+    const sql = 'SELECT * FROM pendentes'
 
     pool.query(sql, (err, result) => {
 
