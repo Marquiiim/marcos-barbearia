@@ -1,0 +1,109 @@
+$primary-color: #2a2a2a;
+$secondary-color: #d4af37;
+$accent-color: #e63946;
+$dark-text: #212529;
+$light-text: #f8f9fa;
+$transition: all 0.3s ease-in-out;
+$border-radius: 8px;
+$box-shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+
+.container {
+    padding: 1.5rem;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.services_courteous,
+.services_extras {
+    background: white;
+    border-radius: $border-radius;
+    padding: 2rem;
+    transition: $transition;
+
+    h1 {
+        color: $primary-color;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        position: relative;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: $transition;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                transform: translateX(5px);
+            }
+
+            div {
+                button {
+                    background: linear-gradient(135deg, $secondary-color, darken($secondary-color, 10%));
+                    color: $light-text;
+                    border: none;
+                    padding: 0.6rem 1.2rem;
+                    border-radius: $border-radius;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: $transition;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+                    &:hover {
+                        background: linear-gradient(135deg, darken($secondary-color, 5%), darken($secondary-color, 15%));
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                        transform: translateY(-2px);
+                    }
+
+                    &:active {
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.services_courteous {
+    border-top: 4px solid $secondary-color;
+}
+
+.services_extras {
+    border-top: 4px solid $accent-color;
+
+    ul li div button {
+        background: linear-gradient(135deg, $accent-color, darken($accent-color, 10%));
+        color: white;
+
+        &:hover {
+            background: linear-gradient(135deg, darken($accent-color, 5%), darken($accent-color, 15%));
+        }
+    }
+}

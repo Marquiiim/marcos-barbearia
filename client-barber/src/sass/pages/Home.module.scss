@@ -1,60 +1,133 @@
-$font: #7B1E2B;
+$primary-color: #7b1e2b;
 
 .container {
-    width: 100%;
-    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    color: white;
+    text-align: center;
+}
 
-    .content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 1.5rem;
+.content {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    animation: fadeIn 1s ease-out;
 
-        .content_logo {
-            transition: transform 0.5s ease-in-out;
+    &_logo {
+        img {
+            max-width: 300px;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
 
             &:hover {
                 transform: scale(1.05);
             }
+        }
+    }
 
-            img {
-                height: 30rem;
-                width: auto;
+    &_frase {
+        p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: inline-block;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                height: 3px;
+                background: $primary-color;
+            }
+        }
+    }
+}
+
+.button_agendar {
+    text-decoration: none;
+
+    button {
+        background: linear-gradient(to right, $primary-color, #c53145);
+        color: #2a2a2a;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px $primary-color;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, $primary-color, transparent);
+            transition: 0.5s;
+        }
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px $primary-color;
+
+            &::before {
+                left: 100%;
             }
         }
 
-        .content_frase {
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}
 
-            p {
-                color: white;
-                font-size: 1.3rem;
-                font-weight: 700;
-                text-shadow:
-                    2px 2px 0 $font,
-                    2px 2px 0 $font,
-                    2px 2px 0 $font,
-                    2px 2px 0 $font;
-                letter-spacing: 1px;
-            }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        gap: 1.5rem;
+
+        &_logo img {
+            max-width: 150px;
         }
 
-        .button_agendar {
-            margin: 1rem;
-
-            button {
-                background-color: #7B1E2B;
-                color: white;
-                font-weight: bold;
-                border: none;
-                border-radius: .8rem;
-                padding: 1rem;
-
-                &:hover {
-                    background-color: #4b141b;
-                    cursor: pointer;
-                }
-            }
+        &_frase p {
+            font-size: 1.8rem;
         }
+    }
+
+    .button_agendar button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
     }
 }

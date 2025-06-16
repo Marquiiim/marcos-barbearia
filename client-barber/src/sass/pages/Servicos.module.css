@@ -1,0 +1,98 @@
+.container {
+  padding: 1.5rem;
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.services_courteous,
+.services_extras {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  transition: all 0.3s ease-in-out;
+}
+.services_courteous h1,
+.services_extras h1 {
+  color: #2a2a2a;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+.services_courteous ul,
+.services_extras ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.services_courteous ul li,
+.services_extras ul li {
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+.services_courteous ul li:last-child,
+.services_extras ul li:last-child {
+  border-bottom: none;
+}
+.services_courteous ul li:hover,
+.services_extras ul li:hover {
+  transform: translateX(5px);
+}
+.services_courteous ul li div button,
+.services_extras ul li div button {
+  background: linear-gradient(135deg, #d4af37, #b29126);
+  color: #f8f9fa;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.services_courteous ul li div button:hover,
+.services_extras ul li div button:hover {
+  background: linear-gradient(135deg, #c7a22b, #9d8022);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+.services_courteous ul li div button:active,
+.services_extras ul li div button:active {
+  transform: translateY(0);
+}
+
+.services_courteous {
+  border-top: 4px solid #d4af37;
+}
+
+.services_extras {
+  border-top: 4px solid #e63946;
+}
+.services_extras ul li div button {
+  background: linear-gradient(135deg, #e63946, #d21a28);
+  color: white;
+}
+.services_extras ul li div button:hover {
+  background: linear-gradient(135deg, #e32231, #bb1824);
+}/*# sourceMappingURL=Servicos.module.css.map */
