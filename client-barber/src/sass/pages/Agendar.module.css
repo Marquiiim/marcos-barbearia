@@ -1,0 +1,142 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.content {
+  width: 100%;
+  max-width: 800px;
+}
+
+.formCard {
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border: none;
+}
+
+.title_form {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #c53145;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+.formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: #c53145;
+  box-shadow: 0 0 0 2px rgba(197, 49, 69, 0.2);
+}
+
+.select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+.select:focus {
+  outline: none;
+  border-color: #c53145;
+  box-shadow: 0 0 0 2px rgba(197, 49, 69, 0.2);
+}
+
+.scheduleTitle {
+  font-size: 1.2rem;
+  color: #343a40;
+  margin-bottom: 1rem;
+}
+
+.gridContainer, .hoursGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.timeButton {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+.timeButton:hover {
+  background: #c53145;
+  border-color: #c53145;
+}
+.timeButton.active {
+  background: #c53145;
+  color: white;
+  border-color: #c53145;
+  font-weight: bold;
+}
+
+.hoursGrid {
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1rem;
+  background: #7b1e2b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+.submitButton:hover {
+  background: #c53145;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.submitButton:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .formCard {
+    padding: 1.5rem;
+  }
+  .gridContainer, .hoursGrid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  }
+}/*# sourceMappingURL=Agendar.module.css.map */
