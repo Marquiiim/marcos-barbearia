@@ -9,12 +9,14 @@ nav {
         display: flex;
         justify-content: center;
         align-items: center;
+        list-style: none;
         padding: 2rem;
         gap: 2rem;
 
         li {
 
             a {
+                text-decoration: none;
                 color: white;
                 background-color: transparent;
                 border-radius: .8rem;

@@ -26,6 +26,14 @@ function Agendar() {
     const handleSubmit = (e) => {
         e.preventDefault()
         setSubmitted(true)
+
+        console.log(`
+        Nome do indivíduo: ${nome}
+        Tipo de corte: ${corte}   
+        Extra: ${extra}
+        Dia: ${dia}
+        Hora ${hora}
+            `)
     }
 
     const horasDisponiveis = [
