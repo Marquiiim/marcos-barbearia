@@ -6,8 +6,8 @@ function Agendar() {
     const [nome, setNome] = useState(''); // SETADO
     const [corte, setCorte] = useState(''); // SETADO
     const [extra, setExtra] = useState(''); // SETADO
-    const [dia, setDia] = useState(''); // NÃO SETADO
-    const [hora, setHora] = useState('');  // NÃO SETADO
+    const [dia, setDia] = useState(''); // SETADO PRECISANDO DE ALTERAÇÕES
+    const [hora, setHora] = useState('');  // SETADO
 
     const [submitted, setSubmitted] = useState(false)
     const [diasDoMes, setDiasDoMes] = useState([]);  // NÃO SERÁ SETADO NO BD
