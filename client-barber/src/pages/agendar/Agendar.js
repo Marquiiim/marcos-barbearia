@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
+
 import styles from '../../sass/pages/Agendar.module.css';
 
 function Agendar() {
-    const [nome, setNome] = useState('');
-    const [corte, setCorte] = useState('');
-    const [extra, setExtra] = useState('');
-    const [dia, setDia] = useState('');
-    const [hora, setHora] = useState('');
-    const [diasDoMes, setDiasDoMes] = useState([]);
+    const [nome, setNome] = useState(''); // SETADO
+    const [corte, setCorte] = useState(''); // SETADO
+    const [extra, setExtra] = useState(''); // SETADO
+    const [dia, setDia] = useState(''); // NÃO SETADO
+    const [hora, setHora] = useState('');  // NÃO SETADO
+
+    const [submitted, setSubmitted] = useState(false)
+    const [diasDoMes, setDiasDoMes] = useState([]);  // NÃO SERÁ SETADO NO BD
 
     useEffect(() => {
         const dataAtual = new Date();
@@ -20,6 +23,11 @@ function Agendar() {
         setDiasDoMes(dias);
     }, []);
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setSubmitted(true)
+    }
+
     const horasDisponiveis = [
         "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
         "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
@@ -31,7 +39,7 @@ function Agendar() {
     return (
         <div className={styles.container}>
             <section className={styles.content}>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <fieldset className={styles.formCard}>
                         <h2 className={styles.title_form}>Agendamento</h2>
 
@@ -69,13 +77,18 @@ function Agendar() {
                                 onChange={(e) => setExtra(e.target.value)}
                                 required
                             >
-                                <option value=''>Serviço extra</option>
                                 <option value='Sem extra'>Sem extra</option>
                                 <option value='Pigmentação'>Pigmentação</option>
                                 <option value='Limpeza Facial'>Limpeza Facial</option>
                                 <option value='Acabamento'>Acabamento</option>
                             </select>
                         </div>
+
+                        {submitted && dia === '' && (
+                            <div className="alert alert-warning" role="alert">
+                                Selecione um dia disponível
+                            </div>
+                        )}
 
                         <div className={styles.formGroup}>
                             <h3 className={styles.scheduleTitle}>Dias disponíveis</h3>
@@ -93,6 +106,12 @@ function Agendar() {
                             </div>
                         </div>
 
+                        {submitted && hora === '' && (
+                            <div className="alert alert-warning" role="alert">
+                                Selecione uma hora disponível
+                            </div>
+                        )}
+
                         <div className={styles.formGroup}>
                             <h3 className={styles.scheduleTitle}>Horários disponíveis</h3>
                             <div className={styles.hoursGrid}>
@@ -100,7 +119,7 @@ function Agendar() {
                                     <button
                                         type="button"
                                         key={horaItem}
-                                        className={`${styles.timeButton} ${hora === horaItem ? styles.active : ''}`}
+                                        className={`${styles.timeButton} ${hora === horaItem.toString() ? styles.active : ''}`}
                                         onClick={() => setHora(horaItem)}
                                     >
                                         {horaItem}
