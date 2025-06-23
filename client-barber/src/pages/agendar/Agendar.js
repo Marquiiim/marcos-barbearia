@@ -165,7 +165,7 @@ function Agendar() {
                             </div>
                         </div>
 
-                        {!submitted && <div class="alert alert-success" role="alert">
+                        {submitted && <div class="alert alert-success" role="alert">
                             Dados enviados com sucesso!
                         </div>}
 
