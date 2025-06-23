@@ -6,11 +6,12 @@ function Agendar() {
     const [nome, setNome] = useState(''); // SETADO
     const [corte, setCorte] = useState(''); // SETADO
     const [extra, setExtra] = useState(''); // SETADO
-    const [dia, setDia] = useState(''); // SETADO PRECISANDO DE ALTERAÇÕES
+    const [data, setData] = useState('') // SETADO
     const [hora, setHora] = useState('');  // SETADO
 
+    const [dia, setDia] = useState('');
     const [submitted, setSubmitted] = useState(false)
-    const [diasDoMes, setDiasDoMes] = useState([]);  // NÃO SERÁ SETADO NO BD
+    const [diasDoMes, setDiasDoMes] = useState([]);
 
     useEffect(() => {
         const dataAtual = new Date();
@@ -28,12 +29,28 @@ function Agendar() {
         setSubmitted(true)
 
         console.log(`
-        Nome do indivíduo: ${nome}
-        Tipo de corte: ${corte}   
-        Extra: ${extra}
-        Dia: ${dia}
-        Hora ${hora}
+            Nome: ${nome}
+            Corte: ${corte}
+            Extra: ${extra}
+            Dia: ${data}
+            Hora: ${hora}
             `)
+    }
+
+    const convertToDate = (key) => {
+        setDia(key.toString())
+
+        const formatoDoisDigitos = (valor) => {
+            return valor < 10 ? `0${valor}` : valor.toString()
+        }
+
+        const dataAtual = new Date()
+        const diaFormatado = formatoDoisDigitos(key)
+        const mesFormatado = formatoDoisDigitos(dataAtual.getMonth() + 1)
+        const ano = dataAtual.getFullYear()
+
+        const dataMySQL = `${ano}-${mesFormatado}-${diaFormatado}`
+        setData(dataMySQL)
     }
 
     const horasDisponiveis = [
@@ -54,6 +71,7 @@ function Agendar() {
                         <div className={styles.formGroup}>
                             <input
                                 type="text"
+                                name="nome"
                                 placeholder="Nome completo"
                                 className={styles.input}
                                 value={nome}
@@ -64,6 +82,7 @@ function Agendar() {
 
                         <div className={styles.formGroup}>
                             <select
+                                name="corte"
                                 className={styles.select}
                                 value={corte}
                                 onChange={(e) => setCorte(e.target.value)}
@@ -80,6 +99,7 @@ function Agendar() {
 
                         <div className={styles.formGroup}>
                             <select
+                                name="extra"
                                 className={styles.select}
                                 value={extra}
                                 onChange={(e) => setExtra(e.target.value)}
@@ -104,9 +124,10 @@ function Agendar() {
                                 {diasDoMes.map(diaItem => (
                                     <button
                                         type="button"
+                                        name="data"
                                         key={diaItem}
                                         className={`${styles.timeButton} ${dia === diaItem.toString() ? styles.active : ''}`}
-                                        onClick={() => setDia(diaItem.toString())}
+                                        onClick={() => convertToDate(diaItem)}
                                     >
                                         {diaItem}
                                     </button>
@@ -126,6 +147,7 @@ function Agendar() {
                                 {horasDisponiveis.map(horaItem => (
                                     <button
                                         type="button"
+                                        name="hora"
                                         key={horaItem}
                                         className={`${styles.timeButton} ${hora === horaItem.toString() ? styles.active : ''}`}
                                         onClick={() => setHora(horaItem)}

@@ -61,9 +61,9 @@ app.get('/api/dados', (req, res) => {
 
 app.post('/api/dados', (req, res) => {
 
-    const { nome, corte, extra, dia, horario } = req.body
+    const { nome, corte, extra, data, horario } = req.body
 
-    pool.query('INSERT INTO pendentes (nome, corte, extra, dia, horario) values (?, ?, ?, ?, ?)', [nome, corte, extra, dia, horario], (err, result) => {
+    pool.query('INSERT INTO pendentes (nome, corte, extra, data, horario) values (?, ?, ?, ?, ?)', [nome, corte, extra, data, horario], (err, result) => {
 
         if (err) {
 
