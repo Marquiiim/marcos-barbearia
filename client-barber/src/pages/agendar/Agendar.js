@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import styles from '../../sass/pages/Agendar.module.css';
 
@@ -13,6 +14,8 @@ function Agendar() {
     const [submitted, setSubmitted] = useState(false)
     const [diasDoMes, setDiasDoMes] = useState([]);
 
+    const [dadosDate, setDadosDate] = useState([])
+
     useEffect(() => {
         const dataAtual = new Date();
         const ano = dataAtual.getFullYear();
@@ -20,21 +23,20 @@ function Agendar() {
 
         const ultimoDiaDoMes = new Date(ano, mes + 1, 0).getDate();
         const dias = Array.from({ length: ultimoDiaDoMes }, (_, i) => i + 1);
-
         setDiasDoMes(dias);
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        setSubmitted(true)
+    const handleSubmit = async (e) => {
+        try {
+            const response = await axios.post('http://127.0.1/api/dados', {
+                columns: [data]
+            })
+            setDadosDate(response.data)
+            setSubmitted(true)
+        } catch (err) {
+            console.error("Erro ao enviar:", err)
+        }
 
-        console.log(`
-            Nome: ${nome}
-            Corte: ${corte}
-            Extra: ${extra}
-            Dia: ${data}
-            Hora: ${hora}
-            `)
     }
 
     const convertToDate = (key) => {
@@ -64,9 +66,14 @@ function Agendar() {
     return (
         <div className={styles.container}>
             <section className={styles.content}>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={async (e) => {
+                    e.preventDefault()
+                    await handleSubmit(e)
+                }}>
                     <fieldset className={styles.formCard}>
-                        <h2 className={styles.title_form}>Agendamento</h2>
+                        <h2 className={styles.title_form}>
+                            Agendamento
+                        </h2>
 
                         <div className={styles.formGroup}>
                             <input
@@ -157,6 +164,10 @@ function Agendar() {
                                 ))}
                             </div>
                         </div>
+
+                        {!submitted && <div class="alert alert-success" role="alert">
+                            Dados enviados com sucesso!
+                        </div>}
 
                         <button type="submit" className={styles.submitButton}>
                             Confirmar Agendamento
