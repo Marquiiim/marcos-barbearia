@@ -7,6 +7,8 @@ $border-color: #ddd;
 $text-light: white;
 $hover-light: #c53145;
 $button-hover: #c53145;
+$disabled-color: #e9ecef;
+$disabled-text: #6c757d;
 
 @mixin card-style {
     background: $light-color;
@@ -111,6 +113,21 @@ $button-hover: #c53145;
         border-color: $accent-color;
         font-weight: bold;
     }
+
+    &:disabled,
+    &.indisponivel {
+        background-color: $disabled-color;
+        color: $disabled-text;
+        cursor: not-allowed;
+        border-color: $border-color;
+        opacity: 0.7;
+
+        &:hover {
+            background-color: $disabled-color;
+            border-color: $border-color;
+            transform: none;
+        }
+    }
 }
 
 .hoursGrid {
@@ -139,6 +156,33 @@ $button-hover: #c53145;
 
     &:active {
         transform: translateY(0);
+    }
+
+    &:disabled {
+        background-color: $disabled-color;
+        color: $disabled-text;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+.alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+
+    &-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+    }
+
+    &-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
     }
 }
 

@@ -5,7 +5,11 @@ const cors = require('cors')
 require('dotenv').config()
 
 const app = express()
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type']
+}));
 app.use(express.json())
 
 const pool = mysql.createPool({
@@ -45,7 +49,7 @@ pool.on('error', (err) => {
 
 app.get('/api/dados', (req, res) => {
 
-    const sql = 'SELECT * FROM pendentes'
+    const sql = 'SELECT DATE_FORMAT(data, "%Y-%m-%d") as data FROM pendentes WHERE data >= CURDATE() GROUP BY data';
 
     pool.query(sql, (err, result) => {
 
@@ -54,7 +58,11 @@ app.get('/api/dados', (req, res) => {
             return res.status(500).json({ error: 'Error no servidor.' })
         }
 
-        res.json(result)
+        const datas = result.map(item =>
+            new Date(item.data).toISOString().split('T')[0]
+        );
+
+        res.json(datas)
     })
 })
 
@@ -62,6 +70,8 @@ app.get('/api/dados', (req, res) => {
 app.post('/api/dados', (req, res) => {
 
     const { nome, corte, extra, data, horario } = req.body
+
+    if (!nome || !corte || !data || !horario) return res.status(400).json({ error: 'Dados incompletos!' })
 
     pool.query('INSERT INTO pendentes (nome, corte, extra, data, horario) values (?, ?, ?, ?, ?)', [nome, corte, extra, data, horario], (err, result) => {
 

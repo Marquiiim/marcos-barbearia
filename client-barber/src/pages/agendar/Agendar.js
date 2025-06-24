@@ -1,58 +1,72 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 import styles from '../../sass/pages/Agendar.module.css';
 
 function Agendar() {
-    const [nome, setNome] = useState(''); // SETADO
-    const [corte, setCorte] = useState(''); // SETADO
-    const [extra, setExtra] = useState(''); // SETADO
-    const [data, setData] = useState('') // SETADO
-    const [hora, setHora] = useState('');  // SETADO
-
+    const [nome, setNome] = useState('');
+    const [corte, setCorte] = useState('');
+    const [extra, setExtra] = useState('');
+    const [data, setData] = useState('');
+    const [hora, setHora] = useState('');
     const [dia, setDia] = useState('');
-    const [submitted, setSubmitted] = useState(false)
+    const [submitted, setSubmitted] = useState(false);
     const [diasDoMes, setDiasDoMes] = useState([]);
-
-    const [dadosDate, setDadosDate] = useState([])
+    const [dadosDate, setDadosDate] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const dataAtual = new Date();
-        const ano = dataAtual.getFullYear();
-        const mes = dataAtual.getMonth();
+        const daysMonth = () => {
+            const dataAtual = new Date();
+            const ano = dataAtual.getFullYear();
+            const mes = dataAtual.getMonth();
+            const ultimoDiaDoMes = new Date(ano, mes + 1, 0).getDate();
+            const dias = Array.from({ length: ultimoDiaDoMes }, (_, i) => i + 1);
+            setDiasDoMes(dias);
+        }
 
-        const ultimoDiaDoMes = new Date(ano, mes + 1, 0).getDate();
-        const dias = Array.from({ length: ultimoDiaDoMes }, (_, i) => i + 1);
-        setDiasDoMes(dias);
+        const fetchAvailableDates = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get('http://localhost:5000/api/dados');
+                const datasDisponiveis = response.data.map(item =>
+                    typeof item === 'string' ? item : item.data.split('T')[0]
+                );
+                setDadosDate(datasDisponiveis);
+            } catch (err) {
+                console.error("Erro ao buscar dados:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        daysMonth();
+        fetchAvailableDates();
     }, []);
 
-    const handleSubmit = async (e) => {
-        try {
-            const response = await axios.post('http://127.0.1/api/dados', {
-                columns: [data]
-            })
-            setDadosDate(response.data)
-            setSubmitted(true)
-        } catch (err) {
-            console.error("Erro ao enviar:", err)
-        }
-
+    const twoDigitFormat = (valor) => {
+        return valor < 10 ? `0${valor}` : valor.toString();
     }
 
-    const convertToDate = (key) => {
-        setDia(key.toString())
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        const formatoDoisDigitos = (valor) => {
-            return valor < 10 ? `0${valor}` : valor.toString()
+        if (!data || !hora) {
+            setSubmitted(true);
+            return;
         }
 
-        const dataAtual = new Date()
-        const diaFormatado = formatoDoisDigitos(key)
-        const mesFormatado = formatoDoisDigitos(dataAtual.getMonth() + 1)
-        const ano = dataAtual.getFullYear()
-
-        const dataMySQL = `${ano}-${mesFormatado}-${diaFormatado}`
-        setData(dataMySQL)
+        try {
+            await axios.post('http://localhost:5000/api/dados', {
+                nome,
+                corte,
+                extra: extra || null,
+                data,
+                horario: hora
+            });
+            setSubmitted(true);
+        } catch (err) {
+            console.error("Erro ao agendar:", err);
+        }
     }
 
     const horasDisponiveis = [
@@ -61,19 +75,12 @@ function Agendar() {
         "17:00", "17:30", "18:00"
     ];
 
-
-
     return (
         <div className={styles.container}>
             <section className={styles.content}>
-                <form onSubmit={async (e) => {
-                    e.preventDefault()
-                    await handleSubmit(e)
-                }}>
+                <form onSubmit={handleSubmit}>
                     <fieldset className={styles.formCard}>
-                        <h2 className={styles.title_form}>
-                            Agendamento
-                        </h2>
+                        <h2 className={styles.title_form}>Agendamento</h2>
 
                         <div className={styles.formGroup}>
                             <input
@@ -127,19 +134,35 @@ function Agendar() {
 
                         <div className={styles.formGroup}>
                             <h3 className={styles.scheduleTitle}>Dias disponíveis</h3>
-                            <div className={styles.gridContainer}>
-                                {diasDoMes.map(diaItem => (
-                                    <button
-                                        type="button"
-                                        name="data"
-                                        key={diaItem}
-                                        className={`${styles.timeButton} ${dia === diaItem.toString() ? styles.active : ''}`}
-                                        onClick={() => convertToDate(diaItem)}
-                                    >
-                                        {diaItem}
-                                    </button>
-                                ))}
-                            </div>
+                            {loading ? (
+                                <p>Carregando datas...</p>
+                            ) : (
+                                <div className={styles.gridContainer}>
+                                    {diasDoMes.map(diaItem => {
+                                        const dataAtual = new Date();
+                                        const dataFormatada = `${dataAtual.getFullYear()}-${twoDigitFormat(dataAtual.getMonth() + 1)}-${twoDigitFormat(diaItem)}`;
+                                        const isBooked = dadosDate.some(d => d === dataFormatada);
+                                        const isPastDay = diaItem < dataAtual.getDate() &&
+                                            dataAtual.getMonth() === new Date().getMonth() &&
+                                            dataAtual.getFullYear() === new Date().getFullYear();
+
+                                        return (
+                                            <button
+                                                type="button"
+                                                key={diaItem}
+                                                className={`${styles.timeButton} ${dia === diaItem.toString() ? styles.active : isBooked || isPastDay ? styles.indisponivel : ''}`}
+                                                onClick={() => {
+                                                    setDia(diaItem.toString());
+                                                    setData(dataFormatada);
+                                                }}
+                                                disabled={isBooked || isPastDay}
+                                            >
+                                                {diaItem}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
 
                         {submitted && hora === '' && (
@@ -154,9 +177,8 @@ function Agendar() {
                                 {horasDisponiveis.map(horaItem => (
                                     <button
                                         type="button"
-                                        name="hora"
                                         key={horaItem}
-                                        className={`${styles.timeButton} ${hora === horaItem.toString() ? styles.active : ''}`}
+                                        className={`${styles.timeButton} ${hora === horaItem ? styles.active : ''}`}
                                         onClick={() => setHora(horaItem)}
                                     >
                                         {horaItem}
@@ -165,9 +187,11 @@ function Agendar() {
                             </div>
                         </div>
 
-                        {submitted && <div class="alert alert-success" role="alert">
-                            Dados enviados com sucesso!
-                        </div>}
+                        {submitted && (
+                            <div className="alert alert-success" role="alert">
+                                Dados enviados com sucesso!
+                            </div>
+                        )}
 
                         <button type="submit" className={styles.submitButton}>
                             Confirmar Agendamento
