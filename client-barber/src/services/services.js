@@ -48,48 +48,52 @@ pool.on('error', (err) => {
 
 
 app.get('/api/dados', (req, res) => {
-
-    const sql = 'SELECT DATE_FORMAT(data, "%Y-%m-%d") as data FROM pendentes WHERE data >= CURDATE() GROUP BY data';
+    const sql = 'SELECT DATE_FORMAT(dia, "%Y-%m-%d") as dia, horario FROM pendentes WHERE dia >= CURDATE()';
 
     pool.query(sql, (err, result) => {
-
         if (err) {
-            console.error('Error na query:', err)
-            return res.status(500).json({ error: 'Error no servidor.' })
+            console.error('Error na query:', err);
+            return res.status(500).json({ error: 'Error no servidor.' });
         }
 
-        const datas = result.map(item =>
-            new Date(item.data).toISOString().split('T')[0]
+        res.json(result);
+    });
+});
+
+
+app.post('/api/dados', async (req, res) => {
+    const { nome, corte, extra, dia, horario } = req.body;
+
+    if (!nome || !corte || !dia || !horario) {
+        return res.status(400).json({ error: 'Dados incompletos!' });
+    }
+
+    try {
+        const [existing] = await pool.query(
+            'SELECT * FROM pendentes WHERE dia = ? AND horario = ?',
+            [dia, horario]
         );
 
-        res.json(datas)
-    })
-})
-
-
-app.post('/api/dados', (req, res) => {
-
-    const { nome, corte, extra, data, horario } = req.body
-
-    if (!nome || !corte || !data || !horario) return res.status(400).json({ error: 'Dados incompletos!' })
-
-    pool.query('INSERT INTO pendentes (nome, corte, extra, data, horario) values (?, ?, ?, ?, ?)', [nome, corte, extra, data, horario], (err, result) => {
-
-        if (err) {
-
-            if (err.code == 'ER_DUP_ENTRY') {
-                return res.status(409).json({ error: 'Corte já agendado.' })
-
-            }
-
-            console.error('Error no MySQL:', err)
-
-            return res.status(500).json({ error: 'Erro interno no servidor.' })
-
+        if (existing.length > 0) {
+            return res.status(409).json({ error: 'Horário já agendado!' });
         }
-        res.json({ message: 'Dados inseridos com sucesso!' })
-    })
-})
+
+        await pool.query(
+            'INSERT INTO pendentes (nome, corte, extra, dia, horario) VALUES (?, ?, ?, ?, ?)',
+            [nome, corte, extra, dia, horario]
+        );
+
+        res.json({ message: 'Agendamento realizado com sucesso!' });
+    } catch (err) {
+        console.error('Erro no MySQL:', err);
+        res.status(500).json({ error: 'Erro interno no servidor' });
+    }
+});
+
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
 
 app.listen(5000, () => {
     console.log('Servidor rodando na porta 5000')

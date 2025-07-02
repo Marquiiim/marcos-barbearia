@@ -11,7 +11,6 @@ function Agendar() {
     const [dia, setDia] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [diasDoMes, setDiasDoMes] = useState([]);
-    const [dadosDate, setDadosDate] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -22,25 +21,10 @@ function Agendar() {
             const ultimoDiaDoMes = new Date(ano, mes + 1, 0).getDate();
             const dias = Array.from({ length: ultimoDiaDoMes }, (_, i) => i + 1);
             setDiasDoMes(dias);
-        }
-
-        const fetchAvailableDates = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get('http://localhost:5000/api/dados');
-                const datasDisponiveis = response.data.map(item =>
-                    typeof item === 'string' ? item : item.data.split('T')[0]
-                );
-                setDadosDate(datasDisponiveis);
-            } catch (err) {
-                console.error("Erro ao buscar dados:", err);
-            } finally {
-                setLoading(false);
-            }
+            setLoading(false);
         }
 
         daysMonth();
-        fetchAvailableDates();
     }, []);
 
     const twoDigitFormat = (valor) => {
@@ -141,7 +125,6 @@ function Agendar() {
                                     {diasDoMes.map(diaItem => {
                                         const dataAtual = new Date();
                                         const dataFormatada = `${dataAtual.getFullYear()}-${twoDigitFormat(dataAtual.getMonth() + 1)}-${twoDigitFormat(diaItem)}`;
-                                        const isBooked = dadosDate.some(d => d === dataFormatada);
                                         const isPastDay = diaItem < dataAtual.getDate() &&
                                             dataAtual.getMonth() === new Date().getMonth() &&
                                             dataAtual.getFullYear() === new Date().getFullYear();
@@ -150,12 +133,14 @@ function Agendar() {
                                             <button
                                                 type="button"
                                                 key={diaItem}
-                                                className={`${styles.timeButton} ${dia === diaItem.toString() ? styles.active : isBooked || isPastDay ? styles.indisponivel : ''}`}
+                                                className={`${styles.timeButton} ${dia === diaItem.toString() ? styles.active : isPastDay ? styles.indisponivel : ''}`}
                                                 onClick={() => {
-                                                    setDia(diaItem.toString());
-                                                    setData(dataFormatada);
+                                                    if (!isPastDay) {
+                                                        setDia(diaItem.toString());
+                                                        setData(dataFormatada);
+                                                    }
                                                 }}
-                                                disabled={isBooked || isPastDay}
+                                                disabled={isPastDay}
                                             >
                                                 {diaItem}
                                             </button>
