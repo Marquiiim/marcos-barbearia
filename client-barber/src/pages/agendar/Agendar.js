@@ -9,11 +9,22 @@ function Agendar() {
     const [data, setData] = useState('');
     const [hora, setHora] = useState('');
     const [dia, setDia] = useState('');
+
+    const [agendamento, setAgendamento] = useState([])
     const [submitted, setSubmitted] = useState(false);
     const [diasDoMes, setDiasDoMes] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const fetchAgendamentos = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/dados')
+                setAgendamento(response.data)
+            } catch (error) {
+                console.error("Erro ao buscar agendamentos:", error)
+            }
+        }
+
         const daysMonth = () => {
             const dataAtual = new Date();
             const ano = dataAtual.getFullYear();
@@ -24,6 +35,7 @@ function Agendar() {
             setLoading(false);
         }
 
+        fetchAgendamentos()
         daysMonth();
     }, []);
 
@@ -44,8 +56,8 @@ function Agendar() {
                 nome,
                 corte,
                 extra: extra || null,
-                data,
-                horario: hora
+                dia,
+                hora
             });
             setSubmitted(true);
         } catch (err) {
@@ -159,16 +171,21 @@ function Agendar() {
                         <div className={styles.formGroup}>
                             <h3 className={styles.scheduleTitle}>Horários disponíveis</h3>
                             <div className={styles.hoursGrid}>
-                                {horasDisponiveis.map(horaItem => (
-                                    <button
-                                        type="button"
-                                        key={horaItem}
-                                        className={`${styles.timeButton} ${hora === horaItem ? styles.active : ''}`}
-                                        onClick={() => setHora(horaItem)}
-                                    >
-                                        {horaItem}
-                                    </button>
-                                ))}
+                                {horasDisponiveis.map(horaItem => {
+                                    const horarioOcupado = agendamento.some(item => item.horario.slice(0, 5) === horaItem
+                                    )
+
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={horaItem}
+                                            className={`${styles.timeButton} ${hora === horaItem ? styles.active : horarioOcupado ? styles.indisponivel : ''}`}
+                                            onClick={() => !horarioOcupado && setHora(horaItem)}
+                                            disabled={horarioOcupado}
+                                        >
+                                            {horaItem}
+                                        </button>)
+                                })}
                             </div>
                         </div>
 
