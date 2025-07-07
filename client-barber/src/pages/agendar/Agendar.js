@@ -55,13 +55,13 @@ function Agendar() {
             await axios.post('http://localhost:5000/api/dados', {
                 nome,
                 corte,
-                extra: extra || null,
-                dia,
-                hora
+                extra: extra || "Sem extra",
+                dia: data,
+                horario: hora
             });
             setSubmitted(true);
         } catch (err) {
-            console.error("Erro ao agendar:", err);
+            console.error("Erro detalhado:", err.response?.data || err.message);
         }
     }
 
@@ -103,7 +103,7 @@ function Agendar() {
                                 <option value='Corte e Bigode'>Corte e Bigode</option>
                                 <option value='Corte e Sobrancelha'>Corte e Sobrancelha</option>
                                 <option value='Corte e Cavanhaque'>Corte e Cavanhaque</option>
-                                <option value='Corte, Barba Completa'>Corte, Barba Completa</option>
+                                <option value='Corte e Barba Completa'>Corte e Barba Completa</option>
                             </select>
                         </div>
 
@@ -172,7 +172,7 @@ function Agendar() {
                             <h3 className={styles.scheduleTitle}>Horários disponíveis</h3>
                             <div className={styles.hoursGrid}>
                                 {horasDisponiveis.map(horaItem => {
-                                    const horarioOcupado = agendamento.some(item => item.horario.slice(0, 5) === horaItem
+                                    const horarioOcupado = agendamento.some(item => item.horario.slice(0, 5) === horaItem && item.dia === data
                                     )
 
                                     return (
@@ -181,7 +181,7 @@ function Agendar() {
                                             key={horaItem}
                                             className={`${styles.timeButton} ${hora === horaItem ? styles.active : horarioOcupado ? styles.indisponivel : ''}`}
                                             onClick={() => !horarioOcupado && setHora(horaItem)}
-                                            disabled={horarioOcupado}
+                                            disabled={horarioOcupado || !data}
                                         >
                                             {horaItem}
                                         </button>)
