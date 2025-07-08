@@ -47,7 +47,7 @@ function Agendar() {
         e.preventDefault();
 
         if (!data || !hora) {
-            setSubmitted(true);
+            setSubmitted(false);
             return;
         }
 
@@ -60,8 +60,16 @@ function Agendar() {
                 horario: hora
             });
             setSubmitted(true);
+
+            setNome('');
+            setCorte('');
+            setExtra('Sem extra');
+            setData('');
+            setHora('');
+            setDia('');
         } catch (err) {
             console.error("Erro detalhado:", err.response?.data || err.message);
+            setSubmitted(false)
         }
     }
 
