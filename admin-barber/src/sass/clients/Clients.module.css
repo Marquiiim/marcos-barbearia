@@ -1,0 +1,143 @@
+.container {
+  width: 45%;
+  padding: 1rem;
+  background: #1a1a1a;
+}
+.container .content {
+  background: #202325;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+.container .content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+.container .content ul > li {
+  background: #262626;
+  border-radius: 10px;
+  padding: 1.2rem;
+  border-left: 3px solid #7b1e2b;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.container .content ul > li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-left-width: 4px;
+}
+.container .content ul > li > span {
+  display: block;
+  font-weight: 600;
+  color: #b92d41;
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5px;
+}
+.container .content ul > li > span::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #c53145;
+  border-radius: 50%;
+  margin-right: 10px;
+  box-shadow: 0 0 6px #c53145;
+}
+.container .content ul > li ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.container .content ul > li ul li {
+  font-size: 0.9rem;
+  color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  font-weight: 300;
+}
+.container .content ul > li ul li::before {
+  content: attr(data-label);
+  font-size: 0.8rem;
+  color: #bdbdbd;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+.container .content ul > li ul .actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.container .content ul > li ul .actions .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+.container .content ul > li ul .actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.container .content ul > li ul .actions .btn:active {
+  transform: translateY(0);
+}
+.container .content ul > li ul .actions .btn-success {
+  background-color: #2e7d32;
+  color: white;
+}
+.container .content ul > li ul .actions .btn-success:hover {
+  background-color: #359039;
+}
+.container .content ul > li ul .actions .btn-warning {
+  background-color: #ff8f00;
+  color: white;
+}
+.container .content ul > li ul .actions .btn-warning:hover {
+  background-color: #ff9a1a;
+}
+.container .content ul > li ul .actions .btn-danger {
+  background-color: #c53145;
+  color: white;
+}
+.container .content ul > li ul .actions .btn-danger:hover {
+  background-color: #cf4053;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 92%;
+    padding: 0.75rem;
+  }
+  .container .content {
+    padding: 1rem;
+  }
+  .container .content ul > li {
+    padding: 1rem;
+  }
+  .container .content ul > li ul {
+    gap: 0.75rem;
+  }
+  .container .content ul > li ul .actions {
+    gap: 0.5rem;
+  }
+  .container .content ul > li ul .actions .btn {
+    min-width: 100px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}/*# sourceMappingURL=Clients.module.css.map */
