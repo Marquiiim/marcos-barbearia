@@ -6,31 +6,26 @@ $card-bg: #262626;
 $success-color: #2e7d32;
 $warning-color: #ff8f00;
 $danger-color: #c53145;
-$border-radius: 10px;
 $card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 $transition: all 0.25s ease;
 
 .container {
-    width: 45%;
     padding: 1rem;
     background: $dark-bg;
 
     .content {
-        background: #202325;
-        border-radius: $border-radius;
+        background: $dark-bg;
         padding: 1.5rem;
         box-shadow: $card-shadow;
+        width: 100%;
 
         ul {
             list-style: none;
-            padding: 0;
-            margin: 0;
             display: grid;
             gap: 0.85rem;
 
             >li {
                 background: $card-bg;
-                border-radius: $border-radius;
                 padding: 1.2rem;
                 border-left: 3px solid $primary-color;
                 transition: $transition;

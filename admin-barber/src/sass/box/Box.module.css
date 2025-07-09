@@ -1,0 +1,32 @@
+.container {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.container .content {
+  width: 100%;
+  list-style: none;
+}
+.container .content li {
+  color: #f0f0f0;
+  font-weight: 500;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: #262626;
+  border-left: 4px solid #7b1e2b;
+  border-radius: 0 12px 12px 0;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container .content li:hover {
+  transform: translateX(4px);
+  border-left-color: #c53145;
+  background: #333333;
+}
+.container .content li span.value {
+  color: #c53145;
+  font-weight: 600;
+}/*# sourceMappingURL=Box.module.css.map */

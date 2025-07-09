@@ -1,5 +1,22 @@
 section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
-  width: auto;
+  width: 100%;
   background-color: #1A1A1A;
+}
+section .left_info {
+  width: 50%;
+}
+section .right_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+section .right_info img {
+  max-width: 300px;
+  height: auto;
+  margin: 1rem;
 }/*# sourceMappingURL=Flow_container.module.css.map */
