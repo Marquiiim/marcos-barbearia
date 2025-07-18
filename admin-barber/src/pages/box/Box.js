@@ -10,7 +10,7 @@ function Box() {
                         Lucro diário:
                     </span>
                     <span>
-                        23123
+                        R$ 23123
                     </span>
                 </li>
                 <li>
@@ -18,7 +18,7 @@ function Box() {
                         Lucro semanal:
                     </span>
                     <span>
-                        12341
+                        R$ 12341
                     </span>
                 </li>
                 <li>
@@ -26,7 +26,7 @@ function Box() {
                         Lucro anual:
                     </span>
                     <span>
-                        8776
+                        R$ 8776
                     </span>
                 </li>
             </ul>
