@@ -4,7 +4,6 @@ section {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #1A1A1A;
 
     .left_info {
         width: 50%;
@@ -14,6 +13,8 @@ section {
         display: flex;
         flex-direction: column;
         align-items: center;
+        align-self: flex-start;
+        margin: 1rem;
         width: 50%;
 
         img {

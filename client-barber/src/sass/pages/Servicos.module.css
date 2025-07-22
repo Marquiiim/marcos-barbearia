@@ -61,7 +61,7 @@
 }
 .services_courteous ul li div button,
 .services_extras ul li div button {
-  background: linear-gradient(135deg, #d4af37, #b29126);
+  background: linear-gradient(135deg, #d4af37, rgb(177.7777777778, 144.8888888889, 38.2222222222));
   color: #f8f9fa;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -73,7 +73,7 @@
 }
 .services_courteous ul li div button:hover,
 .services_extras ul li div button:hover {
-  background: linear-gradient(135deg, #c7a22b, #9d8022);
+  background: linear-gradient(135deg, rgb(198.7654320988, 161.9938271605, 42.7345679012), rgb(156.7901234568, 127.7839506173, 33.7098765432));
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
@@ -90,9 +90,9 @@
   border-top: 4px solid #e63946;
 }
 .services_extras ul li div button {
-  background: linear-gradient(135deg, #e63946, #d21a28);
+  background: linear-gradient(135deg, #e63946, rgb(209.5426008969, 26.4573991031, 40.2152466368));
   color: white;
 }
 .services_extras ul li div button:hover {
-  background: linear-gradient(135deg, #e32231, #bb1824);
+  background: linear-gradient(135deg, rgb(227.1412556054, 34.3587443946, 48.8452914798), rgb(186.9013452915, 23.5986547085, 35.869955157));
 }/*# sourceMappingURL=Servicos.module.css.map */

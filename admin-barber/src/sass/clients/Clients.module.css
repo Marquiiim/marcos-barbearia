@@ -1,6 +1,5 @@
 .container {
   padding: 1rem;
-  background: #1a1a1a;
 }
 .container .content {
   background: #1a1a1a;
@@ -28,7 +27,7 @@
 .container .content ul > li > span {
   display: block;
   font-weight: 600;
-  color: #b92d41;
+  color: rgb(184.5, 45, 64.5);
   font-size: 1rem;
   margin-bottom: 0.6rem;
   display: flex;
@@ -97,21 +96,21 @@
   color: white;
 }
 .container .content ul > li ul .actions .btn-success:hover {
-  background-color: #359039;
+  background-color: rgb(52.8596491228, 143.6403508772, 57.4561403509);
 }
 .container .content ul > li ul .actions .btn-warning {
   background-color: #ff8f00;
   color: white;
 }
 .container .content ul > li ul .actions .btn-warning:hover {
-  background-color: #ff9a1a;
+  background-color: rgb(255, 154.2, 25.5);
 }
 .container .content ul > li ul .actions .btn-danger {
   background-color: #c53145;
   color: white;
 }
 .container .content ul > li ul .actions .btn-danger:hover {
-  background-color: #cf4053;
+  background-color: rgb(207.493902439, 64.006097561, 83.3963414634);
 }
 
 @media (max-width: 768px) {

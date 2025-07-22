@@ -1,5 +1,6 @@
 .container {
-  background: #1a1a1a;
+  display: flex;
+  align-items: flex-start;
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -24,7 +25,7 @@
 .container .content li:hover {
   transform: translateX(4px);
   border-left-color: #c53145;
-  background: #333333;
+  background: rgb(50.75, 50.75, 50.75);
 }
 .container .content li span.value {
   color: #c53145;

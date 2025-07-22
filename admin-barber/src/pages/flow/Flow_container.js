@@ -5,7 +5,6 @@ import Clients from '../clients/Clients'
 import Box from '../box/Box'
 
 function Flow_container() {
-
     return (
         <section>
             <div className={styles.left_info}>

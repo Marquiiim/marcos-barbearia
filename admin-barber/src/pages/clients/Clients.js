@@ -1,4 +1,7 @@
 import styles from '../../sass/clients/Clients.module.css'
+
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -19,6 +22,21 @@ function Clients() {
         fetchAgendamentos()
     }, [])
 
+    const checkCompleted = async (nome) => {
+        try {
+            const response = await axios.post(`http://localhost:5001/api/concluido/${nome}`)
+            setAgendamentos(prev => prev.filter(ag => ag.nome !== nome))
+            console.log(response.data)
+        } catch (error) {
+            console.error("Error ao concluir agendamento:", error)
+        }
+    }
+
+    const formatDateTime = (dateStr, timeStr) => {
+            const date = new Date(`${dateStr}T${timeStr}`)
+            return format(date, "dd/MM/yyyy HH:mm", {locale: ptBR})
+    }
+
     return (
         <section className={styles.container}>
             <div className={styles.content}>
@@ -29,9 +47,14 @@ function Clients() {
                             <ul>
                                 <li data-label="Tipo de corte:">{Agendamento.corte}</li>
                                 <li data-label="Extra:">{Agendamento.extra}</li>
-                                <li data-label="Data:">{Agendamento.dia} - {Agendamento.hora}</li>
+                                <li data-label="Data:">{formatDateTime(Agendamento.dia, Agendamento.horario)}</li>
                                 <div className={styles.actions}>
-                                    <button className={`${styles.btn} ${styles['btn-success']}`}>
+                                    <button className={`${styles.btn} ${styles['btn-success']}`}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            checkCompleted(Agendamento.nome)
+                                        }}
+                                    >
                                         Concluído
                                     </button>
                                     <button className={`${styles.btn} ${styles['btn-warning']}`}>
