@@ -34,6 +34,24 @@ app.get('/api/pendentes', async (req, res) => {
     }
 })
 
+app.get('/api/concluidos', async (req, res) => {
+    try {
+        const [rows] = await pool.query(
+            `SELECT 
+            nome,
+            corte,
+            extra,
+            DATE_FORMAT(dia, '%d/%m/%Y') AS dia_formatado,
+            horario
+            FROM concluidos`
+        )
+        res.json(rows)
+    } catch (err) {
+        console.error('Error na consulta:', err)
+        res.status(500).json({ error: 'Erro no servidor' })
+    }
+})
+
 app.post('/api/concluido/:nome', async (req, res) => {
     const { nome } = req.params
     let connection

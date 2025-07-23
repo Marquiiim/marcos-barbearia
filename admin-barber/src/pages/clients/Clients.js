@@ -61,7 +61,7 @@ function Clients() {
                                 </ul>
                             </li>
                         )) : (
-                        <div class="alert alert-danger" role="alert">
+                        <div className="alert alert-danger" role="alert">
                             Sem cortes no momento, aguardando agendamentos.
                         </div>
                     )}

@@ -2,44 +2,68 @@ $primary-color: #7b1e2b;
 $accent-color: #c53145;
 $text-color: #f0f0f0;
 $card-bg: #262626;
-$spacing-unit: 1rem;
-$border-radius: 12px;
-$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+$border-color: rgba(255, 255, 255, 0.08);
 
 .container {
+    background: $card-bg;
+    border-radius: 12px;
+    padding: 1.8rem;
+    border: 1px solid $border-color;
+    max-width: 280px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        border-color: rgba($accent-color, 0.3);
+        transform: translateY(-2px);
+    }
+}
+
+.content {
     display: flex;
-    align-items: flex-start;
-    border-radius: $border-radius;
-    padding: $spacing-unit;
-    box-shadow: $box-shadow;
+    flex-direction: column;
+    gap: 0.4rem;
 
-    .content {
-        width: 100%;
-        list-style: none;
+    span:first-child {
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: rgba($text-color, 0.7);
+        letter-spacing: 0.03em;
+    }
 
-        li {
-            color: $text-color;
-            font-weight: 500;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            background: $card-bg;
-            border-left: 4px solid $primary-color;
-            border-radius: 0 $border-radius $border-radius 0;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    span:last-child {
+        font-size: 2.1rem;
+        font-weight: 600;
+        color: $text-color;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 5px;
 
-            &:hover {
-                transform: translateX(4px);
-                border-left-color: $accent-color;
-                background: lighten($card-bg, 5%);
-            }
-
-            span.value {
-                color: $accent-color;
-                font-weight: 600;
-            }
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: $accent-color;
         }
+    }
+}
+
+@keyframes fade-emphasis {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}
+
+@media (hover: hover) {
+    .container:hover span:last-child {
+        color: $accent-color;
     }
 }

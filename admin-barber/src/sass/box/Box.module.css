@@ -1,33 +1,55 @@
 .container {
-  display: flex;
-  align-items: flex-start;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-.container .content {
-  width: 100%;
-  list-style: none;
-}
-.container .content li {
-  color: #f0f0f0;
-  font-weight: 500;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
   background: #262626;
-  border-left: 4px solid #7b1e2b;
-  border-radius: 0 12px 12px 0;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 1.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-width: 280px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.container:hover {
+  border-color: rgba(197, 49, 69, 0.3);
+  transform: translateY(-2px);
+}
+
+.content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.4rem;
 }
-.container .content li:hover {
-  transform: translateX(4px);
-  border-left-color: #c53145;
-  background: rgb(50.75, 50.75, 50.75);
+.content span:first-child {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(240, 240, 240, 0.7);
+  letter-spacing: 0.03em;
 }
-.container .content li span.value {
-  color: #c53145;
+.content span:last-child {
+  font-size: 2.1rem;
   font-weight: 600;
+  color: #f0f0f0;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+.content span:last-child::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #c53145;
+}
+
+@keyframes fade-emphasis {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+@media (hover: hover) {
+  .container:hover span:last-child {
+    color: #c53145;
+  }
 }/*# sourceMappingURL=Box.module.css.map */
