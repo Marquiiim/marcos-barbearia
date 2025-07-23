@@ -21,6 +21,7 @@ $transition: all 0.25s ease;
         ul {
             list-style: none;
             display: grid;
+            place-items: center;
             gap: 0.85rem;
 
             >li {

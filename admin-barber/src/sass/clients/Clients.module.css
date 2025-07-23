@@ -10,6 +10,7 @@
 .container .content ul {
   list-style: none;
   display: grid;
+  place-items: center;
   gap: 0.85rem;
 }
 .container .content ul > li {

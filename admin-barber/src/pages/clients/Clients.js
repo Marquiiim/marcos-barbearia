@@ -1,7 +1,5 @@
 import styles from '../../sass/clients/Clients.module.css'
 
-import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -32,40 +30,40 @@ function Clients() {
         }
     }
 
-    const formatDateTime = (dateStr, timeStr) => {
-            const date = new Date(`${dateStr}T${timeStr}`)
-            return format(date, "dd/MM/yyyy HH:mm", {locale: ptBR})
-    }
-
     return (
         <section className={styles.container}>
             <div className={styles.content}>
                 <ul>
-                    {Agendamentos.map(Agendamento =>
-                        <li key={Agendamento.nome}>
-                            <span>{Agendamento.nome}</span>
-                            <ul>
-                                <li data-label="Tipo de corte:">{Agendamento.corte}</li>
-                                <li data-label="Extra:">{Agendamento.extra}</li>
-                                <li data-label="Data:">{formatDateTime(Agendamento.dia, Agendamento.horario)}</li>
-                                <div className={styles.actions}>
-                                    <button className={`${styles.btn} ${styles['btn-success']}`}
-                                        onClick={(e) => {
-                                            e.preventDefault()
-                                            checkCompleted(Agendamento.nome)
-                                        }}
-                                    >
-                                        Concluído
-                                    </button>
-                                    <button className={`${styles.btn} ${styles['btn-warning']}`}>
-                                        Não compareceu
-                                    </button>
-                                    <button className={`${styles.btn} ${styles['btn-danger']}`}>
-                                        Excluir
-                                    </button>
-                                </div>
-                            </ul>
-                        </li>
+                    {Agendamentos.length > 0 ? (
+                        Agendamentos.map(Agendamento =>
+                            <li key={Agendamento.nome}>
+                                <span>{Agendamento.nome}</span>
+                                <ul>
+                                    <li data-label="Tipo de corte:">{Agendamento.corte}</li>
+                                    <li data-label="Extra:">{Agendamento.extra}</li>
+                                    <li data-label="Data:">{Agendamento.dia_formatado} - {Agendamento.horario}</li>
+                                    <div className={styles.actions}>
+                                        <button className={`${styles.btn} ${styles['btn-success']}`}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                checkCompleted(Agendamento.nome)
+                                            }}
+                                        >
+                                            Concluído
+                                        </button>
+                                        <button className={`${styles.btn} ${styles['btn-warning']}`}>
+                                            Não compareceu
+                                        </button>
+                                        <button className={`${styles.btn} ${styles['btn-danger']}`}>
+                                            Excluir
+                                        </button>
+                                    </div>
+                                </ul>
+                            </li>
+                        )) : (
+                        <div class="alert alert-danger" role="alert">
+                            Sem cortes no momento, aguardando agendamentos.
+                        </div>
                     )}
                 </ul>
             </div>

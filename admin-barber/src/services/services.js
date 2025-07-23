@@ -19,7 +19,13 @@ const pool = mysql2.createPool({
 app.get('/api/pendentes', async (req, res) => {
     try {
         const [rows] = await pool.query(
-            'SELECT * FROM pendentes'
+            `SELECT 
+            nome,
+            corte,
+            extra,
+            DATE_FORMAT(dia, '%d/%m/%Y') AS dia_formatado,
+            horario
+            FROM pendentes`
         )
         res.json(rows)
     } catch (err) {
