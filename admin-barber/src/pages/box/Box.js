@@ -5,16 +5,29 @@ import styles from '../../sass/box/Box.module.css'
 
 function Box() {
 
-    const [AgendamentosConcluidos, setAgendamentosConcluidos] = useState([])
     const [profit, setProfit] = useState(0)
+
+    const courteousPrice = {
+        'Apenas Corte': 35,
+        'Corte e Bigode': 40,
+        'Corte e Sobrancelha': 45,
+        'Corte e Cavanhaque': 45,
+        'Corte, Barba e Sobrancelha': 70,
+        'Corte e Barba Completa': 60
+    }
 
     useEffect(() => {
         const fetchAgendamentos = async () => {
             try {
                 const response = await axios.get('http://localhost:5001/api/concluidos')
-                setAgendamentosConcluidos(response.data)
-                setProfit(calculateProfit(response.data.length))
-                console.log(response.data)
+
+                const total = response.data.reduce((sum, agendamento) => {
+                    const servico = agendamento.corte
+                    return sum + courteousPrice[servico]
+                })
+
+                setProfit(total)
+                console.log(profit)
             } catch (error) {
                 console.error("Erro ao buscar agendamentos:", error)
                 setProfit(0)
@@ -23,9 +36,6 @@ function Box() {
         fetchAgendamentos()
     }, [])
 
-    const calculateProfit = (quantity) => {
-        return quantity * 35
-    }
 
     return (
         <section className={styles.container}>

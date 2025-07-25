@@ -12,7 +12,6 @@ function Clients() {
             try {
                 const response = await axios.get('http://localhost:5001/api/pendentes')
                 setAgendamentos(response.data)
-                console.log(response.data)
             } catch (error) {
                 console.error("Erro ao buscar agendamentos:", error)
             }
@@ -24,7 +23,6 @@ function Clients() {
         try {
             const response = await axios.post(`http://localhost:5001/api/concluido/${nome}`)
             setAgendamentos(prev => prev.filter(ag => ag.nome !== nome))
-            console.log(response.data)
         } catch (error) {
             console.error("Error ao concluir agendamento:", error)
         }
