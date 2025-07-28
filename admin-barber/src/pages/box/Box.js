@@ -24,10 +24,8 @@ function Box() {
                 const total = response.data.reduce((sum, agendamento) => {
                     const servico = agendamento.corte
                     return sum + courteousPrice[servico]
-                })
-
+                }, 0)
                 setProfit(total)
-                console.log(profit)
             } catch (error) {
                 console.error("Erro ao buscar agendamentos:", error)
                 setProfit(0)
