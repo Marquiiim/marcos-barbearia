@@ -16,15 +16,30 @@ function Box() {
         'Corte e Barba Completa': 60
     }
 
+    const extrasPrice = {
+        'Pigmentação': 20,
+        'Limpeza Facial': 20,
+        'Acabamento': 10,
+        'Sem Extra': 0,
+        '': 0
+    }
+
     useEffect(() => {
         const fetchAgendamentos = async () => {
             try {
                 const response = await axios.get('http://localhost:5001/api/concluidos')
 
-                const total = response.data.reduce((sum, agendamento) => {
+                const courteous = response.data.reduce((sum, agendamento) => {
                     const servico = agendamento.corte
                     return sum + courteousPrice[servico]
                 }, 0)
+
+                const extra = response.data.reduce((sum, agendamento) => {
+                    const servico = agendamento.extra
+                    return sum + extrasPrice[servico]
+                }, 0)
+
+                const total = courteous + extra
                 setProfit(total)
             } catch (error) {
                 console.error("Erro ao buscar agendamentos:", error)
