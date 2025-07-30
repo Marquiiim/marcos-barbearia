@@ -19,12 +19,34 @@ function Clients() {
         fetchAgendamentos()
     }, [])
 
-    const checkCompleted = async (nome) => {
+    const checkCompleted = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:5001/api/concluido/${nome}`)
-            setAgendamentos(prev => prev.filter(ag => ag.nome !== nome))
+            const response = await axios.post(`http://localhost:5001/api/concluido/${id}`)
+
+            if (response.data.success) {
+                setAgendamentos(prev => prev.filter(ag => ag.id !== id))
+                alert('Agendamento concluído e transferido com sucesso!')
+            } else {
+                alert('Falha ao excluir: ' + (response.data.error || 'Erro desconhecido'))
+            }
         } catch (error) {
             console.error("Error ao concluir agendamento:", error)
+        }
+    }
+
+    const deleteSchedule = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:5001/api/pendentes/${id}`)
+
+            if (response.data.success) {
+                setAgendamentos(prev => prev.filter(ag => ag.id !== id))
+                alert('Agendamento concluído com sucesso!')
+            } else {
+                alert('Falha ao excluir: ' + (response.data.error || 'Erro desconhecido'))
+            }
+        } catch (error) {
+            console.error("Error ao excluir agendamento:", error)
+            alert('Erro ao excluir o agendamento. Verifique o console para detalhes.')
         }
     }
 
@@ -34,7 +56,7 @@ function Clients() {
                 <ul>
                     {Agendamentos.length > 0 ? (
                         Agendamentos.map(Agendamento =>
-                            <li key={Agendamento.nome}>
+                            <li key={Agendamento.id}>
                                 <span>{Agendamento.nome}</span>
                                 <ul>
                                     <li data-label="Tipo de corte:">{Agendamento.corte}</li>
@@ -44,7 +66,7 @@ function Clients() {
                                         <button className={`${styles.btn} ${styles['btn-success']}`}
                                             onClick={(e) => {
                                                 e.preventDefault()
-                                                checkCompleted(Agendamento.nome)
+                                                checkCompleted(Agendamento.id)
                                             }}
                                         >
                                             Concluído
@@ -52,7 +74,12 @@ function Clients() {
                                         <button className={`${styles.btn} ${styles['btn-warning']}`}>
                                             Não compareceu
                                         </button>
-                                        <button className={`${styles.btn} ${styles['btn-danger']}`}>
+                                        <button className={`${styles.btn} ${styles['btn-danger']}`}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                deleteSchedule(Agendamento.id)
+                                            }}
+                                        >
                                             Excluir
                                         </button>
                                     </div>
