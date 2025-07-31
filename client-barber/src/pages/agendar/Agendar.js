@@ -183,13 +183,21 @@ function Agendar() {
                                     const horarioOcupado = agendamento.some(item => item.horario.slice(0, 5) === horaItem && item.dia === data
                                     )
 
+                                    const hoje = new Date().toISOString().split('T')[0]
+                                    const horarioPassado = data === hoje && horaItem < new Date().toLocaleTimeString('pt-BR', {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        hour12: false
+                                    }).slice(0, 5)
+
+
                                     return (
                                         <button
                                             type="button"
                                             key={horaItem}
-                                            className={`${styles.timeButton} ${hora === horaItem ? styles.active : horarioOcupado ? styles.indisponivel : ''}`}
-                                            onClick={() => !horarioOcupado && setHora(horaItem)}
-                                            disabled={horarioOcupado || !data}
+                                            className={`${styles.timeButton} ${hora === horaItem ? styles.active : (horarioOcupado || horarioPassado) ? styles.indisponivel : ''}`}
+                                            onClick={() => !horarioOcupado && !horarioPassado && setHora(horaItem)}
+                                            disabled={horarioOcupado || !data || horarioPassado}
                                         >
                                             {horaItem}
                                         </button>)
